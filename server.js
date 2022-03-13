@@ -32,3 +32,8 @@ breads.get('/:indexArray/edit', (req, res) => {
     index: req.params.indexArray
   })
 })
+
+// 404 Page
+app.get('*', (req, res) => {
+  res.send('404')
+})
