@@ -24,3 +24,11 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log('nomming at port', PORT);
 })
+
+// EDIT
+breads.get('/:indexArray/edit', (req, res) => {
+  res.render('edit', {
+    bread: Bread[req.params.indexArray],
+    index: req.params.indexArray
+  })
+})
