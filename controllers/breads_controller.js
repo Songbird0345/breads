@@ -1,6 +1,8 @@
 const express = require("express");
 const breads = express.Router();
 const Bread = require("models\bread.js");
+const Baker = require('../models/baker.js')
+
 
 // INDEX
 breads.get("/", (req, res) => {
@@ -29,10 +31,14 @@ breads.post("/", (req, res) => {
 });
 
 // NEW
-breads.get("/new", (req, res) => {
-  res.render("new");
-});
-
+breads.get('/new', (req, res) => {
+    Baker.find()
+        .then(foundBakers => {
+            res.render('new', {
+                bakers: foundBakers
+            })
+      })
+})
 // SHOW
 breads.get("/:id", (req, res) => {
   Bread.findById(req.params.id)
@@ -47,6 +53,20 @@ breads.get("/:id", (req, res) => {
       res.send("404");
     });
 });
+
+// schema
+const bakerSchema = new Schema({
+  name: {
+      type: String,
+      required: true,
+      enum: ['Rachel', 'Monica', 'Joey', 'Chandler', 'Ross', 'Phoebe']
+  }, 
+  startDate: {
+      type: Date,
+      required: true
+  },
+  bio: String
+})
 
 // DELETE
 breads.delete('/:id', (req, res) => {
